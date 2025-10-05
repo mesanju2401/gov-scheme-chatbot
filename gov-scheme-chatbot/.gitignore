@@ -69,3 +69,8 @@ logs/
 
 # Data (if needed)
 # data/schemes.json
+
+node_modules/
+.env
+.DS_Store
+*.log
