@@ -1,7 +1,7 @@
 import json
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 from backend.nlp_utils import detect_language, translate_to_english, extract_intent_entities, match_schemes
 
 app = FastAPI()
@@ -17,7 +17,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
     allow_credentials=True,
-    allow_methods=["*"],  # <--- very important to allow OPTIONS/preflight
+    allow_methods=["*"], 
     allow_headers=["*"],
 )
 
@@ -27,6 +27,7 @@ with open("data/schemes.json", "r", encoding="utf-8") as f:
 
 class QueryRequest(BaseModel):
     query: str
+    model_config = ConfigDict(extra='forbid')  
 
 @app.get("/")
 def home():
